@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collapse 折叠面板</title>
+  <style>
+    .container {
+      max-width: 600px;
+      padding: 24px;
+      margin: 50px auto;
+      border: 1px solid #ddd;
+      border-radius: 2px;
+    }
+
+    .container:hover {
+      box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .collapse {
+      font-size: 13px;
+      color: #303033;
+    }
+
+    .collapse-item {
+      border-top: 1px solid #eee;
+    }
+
+    .collapse-item:last-child {
+      border-bottom: 1px solid #eee;
+    }
+
+    .collapse-item .collapse-item-header {
+      line-height: 48px;
+      cursor: pointer;
+    }
+
+    .collapse-item .collapse-item-content {
+      height: 0;
+      overflow: hidden;
+      transition: all .3s linear;
+    }
+
+    .collapse-item.active .collapse-item-content {
+      display: block;
+      padding-bottom: 25px;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Collapse 基本用法</h2>
+    <div class="collapse">
+      <section class="collapse-item">
+        <div class="collapse-item-header">一致性 Consistency</div>
+        <div class="collapse-item-content">
+          与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；
+          在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。
+        </div>
+      </section>
+      <section class="collapse-item">
+        <div class="collapse-item-header">反馈 Feedback</div>
+        <div class="collapse-item-content">
+          控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；
+          页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。
+        </div>
+      </section>
+      <section class="collapse-item">
+        <div class="collapse-item-header">效率 Efficiency</div>
+        <div class="collapse-item-content">
+          简化流程：设计简洁直观的操作流程；
+          清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；
+          帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。
+        </div>
+      </section>
+      <section class="collapse-item">
+        <div class="collapse-item-header">可控 Controllability</div>
+        <div class="collapse-item-content">
+          用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；
+          结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Collapse 手风琴效果</h2>
+    <div class="collapse second">
+      <section class="collapse-item">
+        <div class="collapse-item-header">一致性 Consistency</div>
+        <div class="collapse-item-content">
+          与现实生活一致：与现实生活的流程、逻辑保持一致，遵循用户习惯的语言和概念；
+          在界面中一致：所有的元素和结构需保持一致，比如：设计样式、图标和文本、元素的位置等。
+        </div>
+      </section>
+      <section class="collapse-item">
+        <div class="collapse-item-header">反馈 Feedback</div>
+        <div class="collapse-item-content">
+          控制反馈：通过界面样式和交互动效让用户可以清晰的感知自己的操作；
+          页面反馈：操作后，通过页面元素的变化清晰地展现当前状态。
+        </div>
+      </section>
+      <section class="collapse-item">
+        <div class="collapse-item-header">效率 Efficiency</div>
+        <div class="collapse-item-content">
+          简化流程：设计简洁直观的操作流程；
+          清晰明确：语言表达清晰且表意明确，让用户快速理解进而作出决策；
+          帮助用户识别：界面简单直白，让用户快速识别而非回忆，减少用户记忆负担。
+        </div>
+      </section>
+      <section class="collapse-item">
+        <div class="collapse-item-header">可控 Controllability</div>
+        <div class="collapse-item-content">
+          用户决策：根据场景可给予用户操作建议或安全提示，但不能代替用户进行决策；
+          结果可控：用户可以自由的进行操作，包括撤销、回退和终止当前操作等。
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    class Collapse {
+      constructor($root, accordion = false) {
+        this.$root = $root
+        this.accordion = accordion
+        this.$$items = $root.querySelectorAll('.collapse-item')
+        this.$$itemHeaders = $root.querySelectorAll('.collapse-item>.collapse-item-header')
+        this.bind()
+      }
+
+      bind() {
+        const self = this
+        this.$$itemHeaders.forEach($itemHeader => {
+          $itemHeader.onclick = function() {
+            if (self.accordion) {
+              const isActive = this.parentNode.classList.contains('active')
+              !isActive && self.$$items.forEach($item => {
+                $item.classList.remove('active')
+              })
+            }
+            this.parentNode.classList.toggle('active')
+          }
+        })
+      }
+    }
+
+    new Collapse(document.querySelector('.collapse'))
+    new Collapse(document.querySelector('.collapse.second'), true)
+  </script>
+</body>
+
+</html>
