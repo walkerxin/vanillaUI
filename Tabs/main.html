@@ -13,6 +13,10 @@
       box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
     }
 
+    .tabs {
+      color: #303033;
+    }
+
     .tab-header {
       position: relative;
       list-style: none;
@@ -28,6 +32,7 @@
       font-weight: 500;
       line-height: 40px;
       cursor: pointer;
+      user-select: none;
     }
 
     .tab-header .tab-item:first-child {
@@ -77,42 +82,95 @@
     </div>
   </div>
 
+  <div class="container">
+    <h2>Tabs 标签页</h2>
+    <div class="tabs">
+      <ul class="tab-header">
+        <li class="tab-item active">用户管理</li>
+        <li class="tab-item">配置管理</li>
+        <li class="tab-item">角色管理</li>
+        <li class="tab-item">定时任务补偿</li>
+        <div class="line"></div>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-panel active">用户管理</div>
+        <div class="tab-panel">配置管理</div>
+        <div class="tab-panel">角色管理</div>
+        <div class="tab-panel">定时任务补偿</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Tabs 标签页</h2>
+    <div class="tabs">
+      <ul class="tab-header">
+        <li class="tab-item active">用户管理</li>
+        <li class="tab-item">配置管理</li>
+        <li class="tab-item">角色管理</li>
+        <li class="tab-item">定时任务补偿</li>
+        <div class="line"></div>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-panel active">用户管理</div>
+        <div class="tab-panel">配置管理</div>
+        <div class="tab-panel">角色管理</div>
+        <div class="tab-panel">定时任务补偿</div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const $ = s => document.querySelector(s)
-    const $$ = s => document.querySelectorAll(s)
-
-    const $$tabItems = $$('.tabs .tab-item')
-    const $$tabPanels = $$('.tabs .tab-panel')
-    setLineStyle()
-
-    $$tabItems.forEach($tabItem => {
-      $tabItem.onclick = function() {
-        $$tabItems.forEach($tabItem => $tabItem.classList.remove('active'))
-        this.classList.add('active')
-
-        setLineStyle()
-
-        const index = [...$$tabItems].indexOf(this)
-        $$tabPanels.forEach($tabPanel => $tabPanel.classList.remove('active'))
-        $$tabPanels[index].classList.add('active')
+    class Tabs {
+      constructor($root) {
+        this.$root = $root
+        this.$$tabItems = $root.querySelectorAll('.tab-item')
+        this.$$tabPanels = $root.querySelectorAll('.tab-panel')
+        this.$line = $root.querySelector('.tab-header .line')
+        this.init()
+        this.bind()
       }
-    })
 
-    function getContentWithAndOffset($node) {
-      const styles = getComputedStyle($node)
-      return {
-        width: $node.offsetWidth - parseInt(styles.paddingLeft) - parseInt(styles.paddingRight),
-        offsetLeft: $node.offsetLeft + parseInt(styles.paddingLeft)
+      init() {
+        this.setLineStyle()
+      }
+
+      bind() {
+        const self = this
+        this.$$tabItems.forEach($tabItem => {
+          $tabItem.onclick = function() {
+            self.$$tabItems.forEach($tabItem => $tabItem.classList.remove('active'))
+            this.classList.add('active')
+
+            self.setLineStyle()
+
+            const index = [...self.$$tabItems].indexOf(this)
+            self.$$tabPanels.forEach($tabPanel => $tabPanel.classList.remove('active'))
+            self.$$tabPanels[index].classList.add('active')
+          }
+        })
+      }
+
+      setLineStyle($activeItem = this.$root.querySelector('.tab-item.active')) {
+        if (!$activeItem) return
+        const activeItemAttr = this.getContentWithAndOffset($activeItem)
+        this.$line.style.width = activeItemAttr.width + 'px'
+        this.$line.style.transform = `translateX(${activeItemAttr.offsetLeft}px)`
+      }
+
+      getContentWithAndOffset($node) {
+        const styles = getComputedStyle($node)
+        return {
+          width: $node.offsetWidth - parseInt(styles.paddingLeft) - parseInt(styles.paddingRight),
+          offsetLeft: $node.offsetLeft + parseInt(styles.paddingLeft)
+        }
       }
     }
 
-    function setLineStyle($activeItem = $('.tabs .tab-item.active')) {
-      if (!$activeItem) return
-      const $line = $('.tabs .tab-header .line')
-      const activeItemAttr = getContentWithAndOffset($activeItem)
-      $line.style.width = activeItemAttr.width + 'px'
-      $line.style.transform = `translateX(${activeItemAttr.offsetLeft}px)`
-    }
+    new Tabs(document.querySelectorAll('.tabs')[0])
+    new Tabs(document.querySelectorAll('.tabs')[1])
+    new Tabs(document.querySelectorAll('.tabs')[2])
+
   </script>
 </body>
 
