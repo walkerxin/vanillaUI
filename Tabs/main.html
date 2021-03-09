@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TabStrip</title>
+  <style>
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 24px;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .tab-header {
+      position: relative;
+      list-style: none;
+      display: flex;
+      padding: 0;
+      margin: 0;
+      border-bottom: 2px solid #ddd;
+      font-size: 14px;
+    }
+
+    .tab-header .tab-item {
+      padding: 0 16px;
+      font-weight: 500;
+      line-height: 40px;
+      cursor: pointer;
+    }
+
+    .tab-header .tab-item:first-child {
+      padding-left: 0;
+    }
+
+    .tab-header .tab-item.active {
+      color: #409eff;
+    }
+
+    .tab-header .line {
+      position: absolute;
+      bottom: -2px;
+      height: 2px;
+      background: #409eff;
+      transition: all .3s;
+    }
+
+    .tab-content .tab-panel {
+      padding: 16px 0;
+      display: none;
+    }
+
+    .tab-content .tab-panel.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Tabs 标签页</h2>
+    <div class="tabs">
+      <ul class="tab-header">
+        <li class="tab-item active">用户管理</li>
+        <li class="tab-item">配置管理</li>
+        <li class="tab-item">角色管理</li>
+        <li class="tab-item">定时任务补偿</li>
+        <div class="line"></div>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-panel active">用户管理</div>
+        <div class="tab-panel">配置管理</div>
+        <div class="tab-panel">角色管理</div>
+        <div class="tab-panel">定时任务补偿</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const $ = s => document.querySelector(s)
+    const $$ = s => document.querySelectorAll(s)
+
+    const $$tabItems = $$('.tabs .tab-item')
+    const $$tabPanels = $$('.tabs .tab-panel')
+    setLineStyle()
+
+    $$tabItems.forEach($tabItem => {
+      $tabItem.onclick = function() {
+        $$tabItems.forEach($tabItem => $tabItem.classList.remove('active'))
+        this.classList.add('active')
+
+        setLineStyle()
+
+        const index = [...$$tabItems].indexOf(this)
+        $$tabPanels.forEach($tabPanel => $tabPanel.classList.remove('active'))
+        $$tabPanels[index].classList.add('active')
+      }
+    })
+
+    function getContentWithAndOffset($node) {
+      const styles = getComputedStyle($node)
+      return {
+        width: $node.offsetWidth - parseInt(styles.paddingLeft) - parseInt(styles.paddingRight),
+        offsetLeft: $node.offsetLeft + parseInt(styles.paddingLeft)
+      }
+    }
+
+    function setLineStyle($activeItem = $('.tabs .tab-item.active')) {
+      if (!$activeItem) return
+      const $line = $('.tabs .tab-header .line')
+      const activeItemAttr = getContentWithAndOffset($activeItem)
+      $line.style.width = activeItemAttr.width + 'px'
+      $line.style.transform = `translateX(${activeItemAttr.offsetLeft}px)`
+    }
+  </script>
+</body>
+
+</html>
