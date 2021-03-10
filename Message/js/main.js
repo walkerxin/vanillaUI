@@ -14,7 +14,7 @@ class Message {
 
   init() {
     this.render()
-    this.show()
+    setTimeout(() => this.show(), 100)
     setTimeout(() => this.destroy(), 3000)
   }
 
@@ -41,7 +41,7 @@ class Message {
 
   destroy() {
     this.$messageBox.classList.remove('show')
-    this.$messageBox.remove()
+    setTimeout(() => this.$messageBox.remove(), 300)
   }
 }
 

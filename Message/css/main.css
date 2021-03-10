@@ -59,8 +59,8 @@ button.error:hover {
   border: 1px solid #ebeef5;
   color: #fff;
   background: #edf2fc;
-  /* box-shadow: 0 0 3px 0 #f0f9eb4d; */
   transition: all .3s;
+  opacity: 0;
 }
 
 .vanilla-message-box .iconfont {
@@ -86,4 +86,5 @@ button.error:hover {
 
 .vanilla-message-box.show {
   transform: translate(-50%, 30px);
+  opacity: 1;
 }
