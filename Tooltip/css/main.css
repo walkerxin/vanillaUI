@@ -1,0 +1,37 @@
+body {
+  margin: 0;
+  font-family: Helvetica Neue,Microsoft YaHei,SimSun,sans-serif;
+}
+
+* {
+  font-family: inherit;
+}
+
+.container {
+  max-width: 600px;
+  padding: 24px;
+  margin: 50px auto;
+  border-radius: 3px;
+  border: 1px solid #eee;
+}
+
+.container:hover {
+  box-shadow: 0 0 10px 0 rgba(232, 237, 250, .6),
+    0 2px 5px 0 rgba(232, 237, 250, .5);
+}
+
+button {
+  padding: 12px 16px;
+  margin: 0 4px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  color: #303033;
+  background: #fff;
+  outline: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #eee;
+}
