@@ -35,3 +35,81 @@ button {
 button:hover {
   background-color: #eee;
 }
+
+.vanilla-tooltip-wrapper {
+  position: relative;
+}
+
+.vanilla-tooltip {
+  visibility: hidden;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  transform: translateX(-50%);
+  padding: 8px;
+  border-radius: 5px;
+  background: #303331;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.vanilla-tooltip::after {
+  content: '';
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #303331;
+}
+
+.vanilla-tooltip.show {
+  visibility: visible;
+  z-index: 2;
+}
+
+.vanilla-tooltip.right {
+  bottom: 50%;
+  left: calc(100% + 10px);
+  transform: translateY(50%);
+}
+
+.vanilla-tooltip.right::after {
+  top: 50%;
+  left: unset;
+  right: 100%;
+  transform: translateY(-50%);
+  border-right-color: #303331;
+  border-top-color: transparent;
+}
+
+.vanilla-tooltip.bottom {
+  top: calc(100% + 10px);
+  bottom: unset;
+  left: 50%;
+}
+
+.vanilla-tooltip.bottom::after {
+  top: unset;
+  bottom: 100%;
+  left: 50%;
+  border-bottom-color: #303331;
+  border-top-color: transparent;
+}
+
+.vanilla-tooltip.left {
+  bottom: 50%;
+  left: unset;
+  right: calc(100% + 10px);
+  transform: translateY(50%);
+}
+
+.vanilla-tooltip.left::after {
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  border-left-color: #303331;
+  border-top-color: transparent;
+}

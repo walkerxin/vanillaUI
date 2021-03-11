@@ -10,13 +10,17 @@ class Tooltip {
   render() {
     const $div = document.createElement('div')
     $div.innerText = this.data.content
-    this.$root.appendChild($div)
     $div.classList.add('vanilla-tooltip')
+    this.data.placement && $div.classList.add(this.data.placement)
     this.$tooltip = $div
-
+    this.$root.classList.add('vanilla-tooltip-wrapper')
+    this.$root.appendChild($div)
   }
 
   display() {
+    if (this.$tooltip && this.$tooltip.offsetParent === null) {
+      this.$root.appendChild(this.$tooltip)
+    }
     this.$tooltip.classList.add('show')
   }
 
